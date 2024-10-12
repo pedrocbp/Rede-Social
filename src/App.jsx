@@ -9,19 +9,12 @@ function App() {
   return (
     <div>
       <Header />
-
       <div className={styles.wrapper}>
         <Sidebar />
         <main>
-        <Post 
-        author="Pedro Miguel"
-        content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, obcaecati aperiam. Quam illum commodi velit tempora? Alias, reprehenderit et adipisci cumque, iusto autem, impedit dolorem quos suscipit porro rerum corporis?"
-      />
+          <Post />
 
-      <Post 
-        author="Pedro Miguel"
-        content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, obcaecati aperiam. Quam illum commodi velit tempora? Alias, reprehenderit et adipisci cumque, iusto autem, impedit dolorem quos suscipit porro rerum corporis?"
-      />  
+          <Post />  
         </main>
       </div>
     </div>
