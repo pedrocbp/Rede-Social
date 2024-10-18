@@ -1,33 +1,44 @@
+import { format, formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import styles from './Post.module.css';
 import { Comment } from './Comment';
 import { Avatar } from './Avatar';
 
-export function Post(){
+export function Post({ author, publishedAt, content }){
+    const publishedDateFormated = format(publishedAt, "d 'de' LLLL 'ás' HH:mm'h'", {
+        locale: ptBR,
+    })
+
+    const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+        locale: ptBR,
+        addSuffix: true,
+    })
+
     return (
         <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <Avatar src='https://github.com/pedrocbp.png' />
+                    <Avatar src={author.avatarUrl} />
                     <div className={styles.authorInfo}>
-                        <strong>Pedro Miguel</strong>
-                        <span>Full Stack Developer</span>
+                        <strong>{author.name}</strong>
+                        <span>{author.role}</span>
                     </div>
                 </div>
 
-                <time title='12 de outubro ás 12:35' dateTime='2024-10-12'>Publicado à 1 hora</time>
+                <time title={{publishedDateFormated}} dateTime={publishedAt.toISOString()}>
+                    {publishedDateRelativeToNow}
+                </time>
             </header>
 
             <div className={styles.content}>
-                <p>🚀 Mergulhando no mundo do ReactJS!</p>
-                <p>A cada componente criado, novas portas se abrem no desenvolvimento web.</p>
-                    Entender o poder dos hooks e da renderização eficiente é um verdadeiro game changer!
-                <p>Quem mais está nessa jornada com o React?</p>
-                <p>
-                    <a href=''>#ReactJS</a>{' '}
-                    <a href=''>#DesenvolvimentoWeb</a>{' '}
-                    <a href=''>#Frontend</a>{' '}
-                    <a href=''>#EstudandoSempre</a>{' '}
-                </p>
+                {content.map(line => {
+                    if (line.type === 'paragraph') {
+                        return <p>{line.content}</p>;
+                    } else if (line.type === 'link') {
+                        return <p><a href='#'>{line.content}</a></p>;
+
+                    }
+                })}
             </div>
 
             <form className={styles.commentForm}>
